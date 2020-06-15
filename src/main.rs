@@ -53,7 +53,7 @@ fn main() {
             let pltm = "N/A".to_string();
             pltm
         };
-        println!("Songs: {}\nAlbums: {}\nArtists: {}\nDB Playtime: {}", sngs, albs, arts, pltm);
+        println!("Songs:       {}\nAlbums:      {}\nArtists:     {}\nDB Playtime: {}", sngs, albs, arts, pltm);
     } else if matches.is_present("status") {
         let status: Status = c.status().unwrap();
         let volume = status.volume;
