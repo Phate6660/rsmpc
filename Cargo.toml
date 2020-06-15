@@ -1,0 +1,11 @@
+[package]
+name = "rsmpc"
+version = "0.1.0"
+authors = ["Ash <valleyknight@protonmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+clap = "2.33.1"
+mpd = "0.0.12"
