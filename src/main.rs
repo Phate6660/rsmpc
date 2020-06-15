@@ -1,5 +1,5 @@
 use clap::{App, SubCommand};
-use mpd::{Client, Song};
+use mpd::{Client, Song, Stats, Status};
 
 fn main() {
     let matches = App::new("rsmpc")
@@ -13,6 +13,10 @@ fn main() {
             .about("Play the next song."))
         .subcommand(SubCommand::with_name("current")
             .about("Print the current song in \"artist - title\" format."))
+        .subcommand(SubCommand::with_name("stats")
+            .about("Print MPD stats."))
+        .subcommand(SubCommand::with_name("status")
+            .about("Print MPD status."))
         .get_matches();
     let mut c = Client::connect("127.0.0.1:6600").unwrap();
     if matches.is_present("prev") {
@@ -26,5 +30,20 @@ fn main() {
         let tit = song.title.as_ref().unwrap();
         let art = song.tags.get("Artist").unwrap();
         println!("{} - {}", art, tit);
+    } else if matches.is_present("stats") {
+        let stats: Stats = c.stats().unwrap();
+        let arts = stats.artists;
+        let albs = stats.albums;
+        let sngs = stats.songs;
+        println!("Songs: {}\nAlbums: {}\nArtists: {}", sngs, albs, arts);
+    } else if matches.is_present("status") {
+        let status: Status = c.status().unwrap();
+        let volume = status.volume;
+        let repeat = status.repeat;
+        let random = status.random;
+        let single = status.single;
+        let consume = status.consume;
+        let state = status.state;
+        println!("Volume:  {}%\nRepeat:  {}\nRandom:  {}\nSingle:  {}\nConsume: {}\nState:   {:?}", volume, repeat, random, single, consume, state);
     }
 }
