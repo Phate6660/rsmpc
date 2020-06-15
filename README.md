@@ -5,6 +5,7 @@
 ## commands
 
 - `current`: Print the current song in "artist - title" format.
+- `restart`: Restarts the currently playing song.
 - `prev`: Play the previous song.
 - `toggle`: Toggle between play/pause.
 - `next`: Play the next song.

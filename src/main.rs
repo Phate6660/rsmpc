@@ -5,6 +5,8 @@ fn main() {
     let matches = App::new("rsmpc")
         .version("0.0.1")
         .about("\nmpc, but implemented in Rust.")
+        .subcommand(SubCommand::with_name("restart")
+            .about("Restarts the current song from the beginning."))
         .subcommand(SubCommand::with_name("prev")
             .about("Play the previous song."))
         .subcommand(SubCommand::with_name("toggle")
@@ -16,10 +18,12 @@ fn main() {
         .subcommand(SubCommand::with_name("stats")
             .about("Print MPD stats."))
         .subcommand(SubCommand::with_name("status")
-            .about("Print MPD status."))
+            .about("Print MPD's status."))
         .get_matches();
     let mut c = Client::connect("127.0.0.1:6600").unwrap();
-    if matches.is_present("prev") {
+    if matches.is_present("restart") {
+        c.rewind(0).unwrap();
+    } else if matches.is_present("prev") {
         c.prev().unwrap();
     } else if matches.is_present("toggle") {
         c.toggle_pause().unwrap();
