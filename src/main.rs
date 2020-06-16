@@ -1,4 +1,4 @@
-use clap::{App, SubCommand};
+use clap::{Arg, App, SubCommand};
 use mpd::{Client, Song, Stats, Status};
 
 fn main() {
@@ -18,7 +18,34 @@ fn main() {
         .subcommand(SubCommand::with_name("stats")
             .about("Print MPD stats."))
         .subcommand(SubCommand::with_name("status")
-            .about("Print MPD's status."))
+            .about("Print MPD's status"))
+        .subcommand(SubCommand::with_name("set")
+            .about("Set different options for MPD.")
+            .arg(Arg::with_name("volume")
+                .long("volume")
+                .help("Set the volume.")
+                .value_name("PERCENTAGE")
+                .takes_value(true))
+            .arg(Arg::with_name("repeat")
+                .long("repeat")
+                .help("Disable or enable repeat mode.")
+                .value_name("off/on")
+                .takes_value(true))
+            .arg(Arg::with_name("random")
+                .long("random")
+                .help("Disable or enable random mode.")
+                .value_name("off/on")
+                .takes_value(true))
+            .arg(Arg::with_name("single")
+                .long("single")
+                .help("Disable or enable single mode.")
+                .value_name("off/on")
+                .takes_value(true))
+            .arg(Arg::with_name("consume")
+                .long("consume")
+                .help("Disable or enable consume mode.")
+                .value_name("off/on")
+                .takes_value(true)))
         .get_matches();
     let mut c = Client::connect("127.0.0.1:6600").unwrap();
     if matches.is_present("restart") {
@@ -67,5 +94,55 @@ fn main() {
         let consume = status.consume;
         let state = status.state;
         println!("Volume:  {}%\nRepeat:  {}\nRandom:  {}\nSingle:  {}\nConsume: {}\nState:   {:?}", volume, repeat, random, single, consume, state);
+    } else if let Some(matches) = matches.subcommand_matches("set") {
+        if matches.is_present("volume") {
+            let ivol = matches.value_of("volume").unwrap();
+            let vol: i8 = ivol.parse::<i8>().unwrap();
+            c.volume(vol).unwrap();
+        } else if matches.is_present("repeat") {
+            let inrep = matches.value_of("repeat").unwrap();
+            let outrep: bool = if inrep == "off" {
+                false
+            } else if inrep == "on" {
+                true
+            } else {
+                println!("Could not set the repeat mode! Defaulting to off.");
+                false
+            };
+            c.repeat(outrep).unwrap();
+        } else if matches.is_present("random") {
+            let inran = matches.value_of("random").unwrap();
+            let outran: bool = if inran == "off" {
+                false
+            } else if inran == "on" {
+                true
+            } else {
+                println!("Could not set the random mode! Defaulting to off.");
+                false
+             };
+            c.random(outran).unwrap();
+        } else if matches.is_present("single") {
+            let insin = matches.value_of("single").unwrap();
+            let outsin: bool = if insin == "off" {
+                false
+            } else if insin == "on" {
+                true
+            } else {
+                println!("Could not set the single mode! Defaulting to off.");
+                false
+            };
+            c.single(outsin).unwrap();
+        } else if matches.is_present("consume") {
+            let incon = matches.value_of("consume").unwrap();
+            let outcon: bool = if incon == "off" {
+                false
+            } else if incon == "on" {
+                true
+            } else {
+                println!("Could not set the consume mode! Defaulting to off.");
+                false
+            };
+            c.consume(outcon).unwrap();
+        }
     }
 }
