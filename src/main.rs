@@ -1,6 +1,11 @@
 use clap::{Arg, App, SubCommand};
 use mpd::{Client, Song, Stats, Status};
 
+mod commands;
+use commands::{current::current, playlist::playlist,
+               set::{consume, random, repeat, single, volume},
+               stats::obtain_stats, status::obtain_status};
+
 fn main() {
     let matches = App::new("rsmpc")
         .version("0.0.1")
@@ -54,10 +59,7 @@ fn main() {
     let stats: Stats = c.stats().unwrap();
     let status: Status = c.status().unwrap();
     if matches.is_present("playlist") {
-        let queue = c.queue().unwrap();
-        for x in queue {
-            println!("{} - {}", x.tags.get("Artist").unwrap(), x.title.unwrap());
-        }
+        playlist(&mut c);
     } else if matches.is_present("restart") {
         c.rewind(0).unwrap();
     } else if matches.is_present("prev") {
@@ -67,89 +69,22 @@ fn main() {
     } else if matches.is_present("next") {
         c.next().unwrap();
     } else if matches.is_present("current") {
-        let tit = song.title.as_ref().unwrap();
-        let art = song.tags.get("Artist").unwrap();
-        println!("{} - {}", art, tit);
+        current(song);
     } else if matches.is_present("stats") {
-        let arts = stats.artists;
-        let albs = stats.albums;
-        let sngs = stats.songs;
-        let time = stats.db_playtime.num_seconds();
-        let pltm: String = if time > 86400 {
-            let t = time / 60 / 60 / 24;
-            let pltm = t.to_string() + "d";
-            pltm
-        } else if time > 3600 {
-            let t = time / 60 / 60;
-            let pltm = t.to_string() + "h";
-            pltm
-        } else if time > 60 {
-            let t = time / 60;
-            let pltm = t.to_string() + "m";
-            pltm
-        } else {
-            println!("Could not calculate DB Playtime.");
-            let pltm = "N/A".to_string();
-            pltm
-        };
-        println!("Songs:       {}\nAlbums:      {}\nArtists:     {}\nDB Playtime: {}", sngs, albs, arts, pltm);
+        obtain_stats(stats);
     } else if matches.is_present("status") {
-        let volume = status.volume;
-        let repeat = status.repeat;
-        let random = status.random;
-        let single = status.single;
-        let consume = status.consume;
-        let state = status.state;
-        println!("Volume:  {}%\nRepeat:  {}\nRandom:  {}\nSingle:  {}\nConsume: {}\nState:   {:?}", volume, repeat, random, single, consume, state);
+        obtain_status(status);
     } else if let Some(matches) = matches.subcommand_matches("set") {
         if matches.is_present("volume") {
-            let ivol = matches.value_of("volume").unwrap();
-            let vol: i8 = ivol.parse::<i8>().unwrap();
-            c.volume(vol).unwrap();
+            volume(matches, &mut c);
         } else if matches.is_present("repeat") {
-            let inrep = matches.value_of("repeat").unwrap();
-            let outrep: bool = if inrep == "off" {
-                false
-            } else if inrep == "on" {
-                true
-            } else {
-                println!("Could not set the repeat mode! Defaulting to off.");
-                false
-            };
-            c.repeat(outrep).unwrap();
+            repeat(matches, &mut c);
         } else if matches.is_present("random") {
-            let inran = matches.value_of("random").unwrap();
-            let outran: bool = if inran == "off" {
-                false
-            } else if inran == "on" {
-                true
-            } else {
-                println!("Could not set the random mode! Defaulting to off.");
-                false
-            };
-            c.random(outran).unwrap();
+            random(matches, &mut c);
         } else if matches.is_present("single") {
-            let insin = matches.value_of("single").unwrap();
-            let outsin: bool = if insin == "off" {
-                false
-            } else if insin == "on" {
-                true
-            } else {
-                println!("Could not set the single mode! Defaulting to off.");
-                false
-            };
-            c.single(outsin).unwrap();
+            single(matches, &mut c);
         } else if matches.is_present("consume") {
-            let incon = matches.value_of("consume").unwrap();
-            let outcon: bool = if incon == "off" {
-                false
-            } else if incon == "on" {
-                true
-            } else {
-                println!("Could not set the consume mode! Defaulting to off.");
-                false
-            };
-            c.consume(outcon).unwrap();
+            consume(matches, &mut c);
         }
     }
 }
