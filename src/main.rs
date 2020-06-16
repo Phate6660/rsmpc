@@ -18,7 +18,7 @@ fn main() {
         .subcommand(SubCommand::with_name("stats")
             .about("Print MPD stats."))
         .subcommand(SubCommand::with_name("status")
-            .about("Print MPD's status"))
+            .about("Print MPD's status."))
         .subcommand(SubCommand::with_name("set")
             .about("Set different options for MPD.")
             .arg(Arg::with_name("volume")
