@@ -6,6 +6,7 @@
 
 - `current`: Print the current song in "artist - title" format.
 - `next`: Play the next song.
+- `playlist`: Print all songs in the current queue, with the same format as `current`.
 - `prev`: Play the previous song.
 - `restart`: Restarts the currently playing song.
 - `set`: Set different MPD options. Currently supported are volume, repeat, random, single and consume.

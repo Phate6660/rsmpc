@@ -5,6 +5,8 @@ fn main() {
     let matches = App::new("rsmpc")
         .version("0.0.1")
         .about("\nmpc, but implemented in Rust.")
+        .subcommand(SubCommand::with_name("playlist")
+            .about("Prints all songs in the current queue."))
         .subcommand(SubCommand::with_name("restart")
             .about("Restarts the current song from the beginning."))
         .subcommand(SubCommand::with_name("prev")
@@ -48,7 +50,15 @@ fn main() {
                 .takes_value(true)))
         .get_matches();
     let mut c = Client::connect("127.0.0.1:6600").unwrap();
-    if matches.is_present("restart") {
+    let song: Song = c.currentsong().unwrap().unwrap();
+    let stats: Stats = c.stats().unwrap();
+    let status: Status = c.status().unwrap();
+    if matches.is_present("playlist") {
+        let queue = c.queue().unwrap();
+        for x in queue {
+            println!("{} - {}", x.tags.get("Artist").unwrap(), x.title.unwrap());
+        }
+    } else if matches.is_present("restart") {
         c.rewind(0).unwrap();
     } else if matches.is_present("prev") {
         c.prev().unwrap();
@@ -57,12 +67,10 @@ fn main() {
     } else if matches.is_present("next") {
         c.next().unwrap();
     } else if matches.is_present("current") {
-        let song: Song = c.currentsong().unwrap().unwrap();
         let tit = song.title.as_ref().unwrap();
         let art = song.tags.get("Artist").unwrap();
         println!("{} - {}", art, tit);
     } else if matches.is_present("stats") {
-        let stats: Stats = c.stats().unwrap();
         let arts = stats.artists;
         let albs = stats.albums;
         let sngs = stats.songs;
@@ -86,7 +94,6 @@ fn main() {
         };
         println!("Songs:       {}\nAlbums:      {}\nArtists:     {}\nDB Playtime: {}", sngs, albs, arts, pltm);
     } else if matches.is_present("status") {
-        let status: Status = c.status().unwrap();
         let volume = status.volume;
         let repeat = status.repeat;
         let random = status.random;
@@ -119,7 +126,7 @@ fn main() {
             } else {
                 println!("Could not set the random mode! Defaulting to off.");
                 false
-             };
+            };
             c.random(outran).unwrap();
         } else if matches.is_present("single") {
             let insin = matches.value_of("single").unwrap();
