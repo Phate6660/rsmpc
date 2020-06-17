@@ -2,6 +2,10 @@
 
 `mpc`, but implemented in Rust.
 
+Note: This is not meant to be a direct implementation, there will be some differences.
+For example: I moved the options of setting things like the volume to a subcommand called `set`
+instead of having them as their own commands.
+
 ## commands
 
 - `current`: Print the current song in "artist - title" format.
