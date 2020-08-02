@@ -1,22 +1,26 @@
 use mpd::Stats;
 
+fn calc_time(time: i64) -> String {
+    if time > 86400 {
+        let t = time / 60 / 60 / 24;
+        return t.to_string() + &"d".to_string()
+    } else if time > 3600 {
+        let t = time / 60 / 60;
+        return t.to_string() + &"h".to_string()
+    } else if time > 60 {
+        let t = time / 60;
+        return t.to_string() + &"m".to_string()
+    } else {
+        println!("Could not calculate time.");
+        return "N/A".to_string()
+    };
+}
+
 pub fn obtain_stats(stats: Stats) {
     let arts = stats.artists;
     let albs = stats.albums;
     let sngs = stats.songs;
-    let time = stats.db_playtime.num_seconds();
-    let pltm: String = if time > 86400 {
-        let t = time / 60 / 60 / 24;
-        t.to_string() + "d"
-    } else if time > 3600 {
-        let t = time / 60 / 60;
-        t.to_string() + "h"
-    } else if time > 60 {
-        let t = time / 60;
-        t.to_string() + "m"
-    } else {
-        println!("Could not calculate DB Playtime.");
-        "N/A".to_string()
-    };
-    println!("Songs:       {}\nAlbums:      {}\nArtists:     {}\nDB Playtime: {}", sngs, albs, arts, pltm);
+    let upti = calc_time(stats.uptime.num_seconds());
+    let dbti = calc_time(stats.db_playtime.num_seconds());
+    println!("Songs:       {}\nAlbums:      {}\nArtists:     {}\nUptime:      {}\nDB Playtime: {}", sngs, albs, arts, upti, dbti);
 }
