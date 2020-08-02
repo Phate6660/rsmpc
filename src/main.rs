@@ -86,5 +86,7 @@ fn main() {
         } else if matches.is_present("consume") {
             consume(matches, &mut c);
         }
+    } else {
+        obtain_status(song, status);
     }
 }
