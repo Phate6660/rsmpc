@@ -22,5 +22,11 @@ pub fn obtain_stats(stats: Stats) {
     let sngs = stats.songs;
     let upti = calc_time(stats.uptime.num_seconds());
     let dbti = calc_time(stats.db_playtime.num_seconds());
+    // Songs:       amount
+    // Albums:      amount
+    // Artists:     amount
+    // Uptime:      time
+    // TODO: Add date/time of the DB updating previously
+    // DB Playtime: time
     println!("Songs:       {}\nAlbums:      {}\nArtists:     {}\nUptime:      {}\nDB Playtime: {}", sngs, albs, arts, upti, dbti);
 }
