@@ -16,5 +16,25 @@ instead of having them as their own commands.
 - `restart`: Restarts the currently playing song.
 - `set`: Set different MPD options. Currently supported are volume, repeat, random, single and consume.
 - `stats`: Display MPD stats (e.g. amount of artists/albums/etc).
+
+Example output:
+
+```
+Songs:       12449
+Albums:      1056
+Artists:     144
+Uptime:      3d
+DB Playtime: 36d
+```
+
 - `status`: Display MPD's status (e.g. volume level, modes, state).
+
+Example output:
+
+```
+System Of A Down - Question!
+[Play] 03:31/03:20
+Volume: 100%  Repeat: off  Random: off  Single: off  Consume: off
+```
+
 - `toggle`: Toggle between play/pause.
