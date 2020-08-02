@@ -33,7 +33,7 @@ Example output:
 
 ```
 System Of A Down - Question!
-[Play] 03:31/03:20
+[Playing] 03:31/03:20
 Volume: 100%  Repeat: off  Random: off  Single: off  Consume: off
 ```
 
