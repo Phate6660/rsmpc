@@ -73,7 +73,7 @@ fn main() {
     } else if matches.is_present("stats") {
         obtain_stats(stats);
     } else if matches.is_present("status") {
-        obtain_status(status);
+        obtain_status(song, status);
     } else if let Some(matches) = matches.subcommand_matches("set") {
         if matches.is_present("volume") {
             volume(matches, &mut c);
