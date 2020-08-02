@@ -15,7 +15,7 @@ instead of having them as their own commands.
 - `prev`: Play the previous song.
 - `restart`: Restarts the currently playing song.
 - `set`: Set different MPD options. Currently supported are volume, repeat, random, single and consume.
-- `stats`: Display MPD stats (e.g. amount of artists/albums/etc).
+- `stats`: Display MPD stats.
 
 Example output:
 
@@ -27,7 +27,7 @@ Uptime:      3d
 DB Playtime: 36d
 ```
 
-- `status`: Display MPD's status (e.g. volume level, modes, state).
+- `status`: Display MPD's status.
 
 Example output:
 
