@@ -1,19 +1,25 @@
 use mpd::Stats;
 
 fn calc_time(time: i64) -> String {
-    if time > 86400 {
-        let t = time / 60 / 60 / 24;
-        return t.to_string() + &" days".to_string()
-    } else if time > 3600 {
-        let t = time / 60 / 60;
-        return t.to_string() + &" hours".to_string()
-    } else if time > 60 {
-        let t = time / 60;
-        return t.to_string() + &" minutes".to_string()
+    let days = if time > 86400 {
+        let days_pre = time / 60 / 60 / 24;
+        days_pre.to_string() + "d"
     } else {
-        println!("Could not calculate time.");
-        return "N/A".to_string()
+        "".to_string()
     };
+    let hours = if time > 3600 {
+        let hours_pre = (time / 60 / 60) % 24;
+        hours_pre.to_string() + "h"
+    } else {
+        "".to_string()
+    };
+    let minutes = if time > 60 {
+        let minutes_pre = (time / 60) % 60;
+        minutes_pre.to_string() + "m"
+    } else {
+        "".to_string()
+    };
+    format!("{} {} {}", days, hours, minutes).trim().to_string()
 }
 
 pub fn obtain_stats(stats: Stats) {
