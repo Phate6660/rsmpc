@@ -23,8 +23,8 @@ Example output:
 Songs:       12449
 Albums:      1056
 Artists:     144
-Uptime:      3 days
-DB Playtime: 36 days
+Uptime:      7d 11h 45m
+DB Playtime: 36d 18h 7m
 ```
 
 - `status`: Display MPD's status.
