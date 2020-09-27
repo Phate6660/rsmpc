@@ -1,3 +1,5 @@
+#![forbid(unsafe_code)]
+
 use mpd::Stats;
 
 fn calc_time(time: i64) -> String {
