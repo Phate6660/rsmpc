@@ -1,3 +1,5 @@
+#![forbid(unsafe_code)]
+
 use mpd::Client;
 
 pub fn playlist(c: &mut Client) {

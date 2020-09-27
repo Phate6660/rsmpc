@@ -1,3 +1,5 @@
+#![forbid(unsafe_code)]
+
 use clap::{Arg, App, SubCommand};
 use mpd::{Client, Song, Stats, Status};
 
