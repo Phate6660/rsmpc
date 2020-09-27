@@ -1,3 +1,5 @@
+#![forbid(unsafe_code)]
+
 use mpd::{Song, State, Status};
 use sedregex::find_and_replace;
 use std::fmt;
