@@ -1,3 +1,5 @@
+#![forbid(unsafe_code)]
+
 use mpd::Song;
 
 pub fn current(song: Song) {
