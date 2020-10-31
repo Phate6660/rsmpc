@@ -1,4 +1,4 @@
-use mpd::{Song, State, Status};
+use mpd::{State, Status, Song};
 use sedregex::find_and_replace;
 use std::fmt;
 
@@ -24,7 +24,9 @@ pub fn obtain_status(song: Song, status: Status) {
     let art = song.tags.get("Artist").unwrap();
     let tit = song.title.as_ref().unwrap();
     let state_pre_string = status.state;
-    let state =  PlayState { sta: state_pre_string }.to_string();
+    let state = PlayState { sta: state_pre_string }.to_string();
+    let position = status.song.unwrap().pos + 1; // starts counting at 0, add 1 to re-align it with what people expect
+    let count = status.queue_len;
     let elap = status.elapsed.unwrap().num_seconds();
     let elapsed = format_time(elap);
     let dur = status.duration.unwrap().num_seconds();
@@ -36,9 +38,8 @@ pub fn obtain_status(song: Song, status: Status) {
     let consume = status.consume;
     // artist - title
     let row_one = format!("{} - {}", art, tit);
-    let row_two_pre_filter = format!("[{}] {}/{}", state, elapsed, duration);
-    // [state] elapsed/duration
-    // TODO: obtain playlist info, place it between state and elapsed/duration
+    let row_two_pre_filter = format!("[{}] #{}/{} {}/{}", state, position, count, elapsed, duration);
+    // [state] #playlist_current/total elapsed/duration
     let row_two = find_and_replace(&row_two_pre_filter, &["s/Play/Playing/g", "s/Pause/Paused/g"]).unwrap().to_string();
     let row_three_pre_filter = format!("Volume: {}%  Repeat: {}  Random: {}  Single: {}  Consume: {}", volume, repeat, random, single, consume);
     // Volume: percentage  Repeat: on/off  Random: on/off  Single: on/off  Consume: on/off
