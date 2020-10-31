@@ -27,7 +27,7 @@ Uptime:      5d 4h 17m
 DB Playtime: 37d 9h 35m
 ```
 
-  + Comparison to `mpc stats`:
+Comparison to `mpc stats`:
 
   ```
   Artists:    164
@@ -50,7 +50,7 @@ The Ocean - Jurassic | Cretaceous
 Volume: 100%  Repeat: off  Random: off  Single: off  Consume: off
 ```
 
-  + Comparison to `mpc status`:
+Comparison to `mpc status`:
 
   ```
   The Ocean - Jurassic | Cretaceous
