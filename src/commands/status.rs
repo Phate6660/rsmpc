@@ -25,7 +25,7 @@ pub fn obtain_status(song: Song, status: Status) {
     let tit = song.title.as_ref().unwrap();
     let state_pre_string = status.state;
     let state = PlayState { sta: state_pre_string }.to_string();
-    let position = status.song.unwrap().pos + 1; // starts counting at 0, add 1 to re-align it with what people expect
+    let position = song.place.unwrap().pos + 1; // starts counting at 0, add 1 to re-align it with what people expect
     let count = status.queue_len;
     let elap = status.elapsed.unwrap().num_seconds();
     let elapsed = format_time(elap);
