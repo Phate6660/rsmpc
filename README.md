@@ -30,33 +30,33 @@ DB Playtime: 37d 9h 35m
 
 Comparison to `mpc stats`:
 
-  ```
-  Artists:    164
-  Albums:    1077
-  Songs:    12625
-  
-  Play Time:    0 days, 11:41:35
-  Uptime:       5 days, 4:18:16
-  DB Updated:   Wed Oct 28 22:30:39 2020
-  DB Play Time: 37 days, 9:35:22
-  ```
+```
+Artists:    164
+Albums:    1077
+Songs:    12625
+
+Play Time:    0 days, 11:41:35
+Uptime:       5 days, 4:18:16
+DB Updated:   Wed Oct 28 22:30:39 2020
+DB Play Time: 37 days, 9:35:22
+```
 
 - `status`: Display MPD's status.
 
 Example output:
 
 ```
-The Ocean - Jurassic | Cretaceous
-[Paused] #2/32 01:27/13:24
-Volume: 100%  Repeat: off  Random: off  Single: off  Consume: off
+After the Minor - Structure Fire
+[Playing]   #5/32   04:28/05:06
+Volume: 100%   Repeat: on   Random: off   Single: off   Consume: off
 ```
 
 Comparison to `mpc status`:
 
-  ```
-  The Ocean - Jurassic | Cretaceous
-  [paused]  #2/32   1:28/13:25 (10%)
-  volume:100%   repeat: off   random: off   single: off   consume: off
-  ```
+```
+After the Minor - Structure Fire
+[playing] #5/32   4:37/5:07 (90%)
+volume:100%   repeat: on    random: off   single: off   consume: off
+```
 
 - `toggle`: Toggle between play/pause.

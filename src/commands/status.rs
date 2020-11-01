@@ -38,10 +38,10 @@ pub fn obtain_status(song: Song, status: Status) {
     let consume = status.consume;
     // artist - title
     let row_one = format!("{} - {}", art, tit);
-    let row_two_pre_filter = format!("[{}] #{}/{} {}/{}", state, position, count, elapsed, duration);
+    let row_two_pre_filter = format!("[{}]   #{}/{}   {}/{}", state, position, count, elapsed, duration);
     // [state] #playlist_current/total elapsed/duration
     let row_two = find_and_replace(&row_two_pre_filter, &["s/Play/Playing/g", "s/Pause/Paused/g"]).unwrap().to_string();
-    let row_three_pre_filter = format!("Volume: {}%  Repeat: {}  Random: {}  Single: {}  Consume: {}", volume, repeat, random, single, consume);
+    let row_three_pre_filter = format!("Volume: {}%   Repeat: {}   Random: {}   Single: {}   Consume: {}", volume, repeat, random, single, consume);
     // Volume: percentage  Repeat: on/off  Random: on/off  Single: on/off  Consume: on/off
     let row_three = find_and_replace(&row_three_pre_filter, &["s/false/off/g", "s/true/on/g"]).unwrap().to_string();
     println!("{}\n{}\n{}", row_one, row_two, row_three);
