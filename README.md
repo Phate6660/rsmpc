@@ -15,6 +15,7 @@ instead of having them as their own commands.
 - `prev`: Play the previous song.
 - `restart`: Restarts the currently playing song.
 - `set`: Set different MPD options. Currently supported are volume, repeat, random, single and consume.
+- `shuffle`: Shuffle the current queue.
 - `stats`: Display MPD stats.
 
 Example output:

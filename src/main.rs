@@ -22,6 +22,8 @@ fn main() {
             .about("Play the next song."))
         .subcommand(SubCommand::with_name("current")
             .about("Print the current song in \"artist - title\" format."))
+        .subcommand(SubCommand::with_name("shuffle")
+            .about("Shuffle the queue."))
         .subcommand(SubCommand::with_name("stats")
             .about("Print MPD stats."))
         .subcommand(SubCommand::with_name("status")
@@ -70,6 +72,8 @@ fn main() {
         c.next().unwrap();
     } else if matches.is_present("current") {
         current(song);
+    } else if matches.is_present("shuffle") {
+        c.shuffle(..).unwrap();
     } else if matches.is_present("stats") {
         obtain_stats(stats);
     } else if matches.is_present("status") {
